@@ -1,0 +1,36 @@
+<AddBulkUsers>:
+
+
+    MDBoxLayout:
+        id:choosefile_box
+        orientation:'vertical'
+        size_hint:None,None
+        adaptive_size:True
+        pos_hint:{'center_x':0.5,'center_y':0.5}
+        md_bg_color:"#D9D9D9"
+        padding:20
+        spacing:10
+
+        MDLabel:
+            text:"Please select .CSV file"
+            font_style: "Caption"
+            
+
+        MDTextField:
+            id:choosefile_bar
+            size_hint:None,None
+            mode:"fill"
+            fill_color_normal:"#FFFFFF"
+            width:350
+            radius:10,10,10,10
+            padding: 10,10,10,(self.height / 2.0 - (self.line_height / 2.0) * len(self._lines))
+            disabled: True
+            text:"Choose File"
+            active_line:False
+            
+
+        MDRaisedButton:
+            text: "Choose file"
+            size_hint:1,None
+            #width:200
+            md_bg_color: "#3333CC"

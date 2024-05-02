@@ -1,0 +1,572 @@
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+
+
+<FileExportWidget>:
+    orientation:'vertical'
+    size_hint:None,None
+    adaptive_size:True
+    pos_hint:{'center_x':0.5,'center_y':0.5}
+    #line_color:'blue'
+    spacing:10
+
+    MDBoxLayout:
+        orientation:'horizontal'
+        size_hint:None,None
+        adaptive_size:True
+
+        MDTextField:
+            id:filename_field
+            size_hint:None,None
+            height:dp(60)
+            width:dp(300)
+            mode:'rectangle'
+            line_color:0,0,0,0
+            line_anim:False
+
+        MDLabel:
+            text:".CSV"
+            size_hint:None,None
+            font_style:'H5'
+            adaptive_size:True
+
+    MDRaisedButton:
+        text: "Export"
+        md_bg_color: "green"
+        size_hint:1,None
+        adaptive_height:True
+        on_release:root.export_click()
+
+
+<SpecificButton>:
+    elevation:1
+    shadow_radius:10
+    shadow_offset: 0, -3
+    shadow_softness: 4
+
+<TitleBar>:
+    orientation: 'vertical'
+    size_hint:1,None
+    adaptive_height:True  
+    md_bg_color: "#FFFFFF"
+    pos_hint:{'top':1}
+    padding:"0dp","10dp","0dp","10dp"
+    elevation: 1
+    shadow_offset: 6, -6
+    shadow_softness: 4
+    
+
+    MDLabel:
+        text:"ITX-AD"
+        halign: "center"
+        font_style:"Body2"
+        size_hint:None,None
+        adaptive_size:True
+        pos_hint:{'center_x':0.5}
+        bold: True
+
+
+
+
+<FilterWidget>:
+    orientation: 'horizontal'
+    size_hint:None,None
+    adaptive_size:True
+
+    MDIcon:
+        icon: "filter-outline"
+        size_hint:None,None
+        adaptive_size:True
+    
+    MDLabel:
+        text:"Filters"
+        size_hint:None,None
+        adaptive_size:True
+
+    MDIcon:
+        icon:"menu-down"
+        size_hint:None,None
+        adaptive_size:True
+
+
+
+
+<CheckedItem>:
+    orientation:"vertical"
+    size_hint:None,None
+    adaptive_size:True
+
+    MDLabel:
+        text:"Name:" + root.name
+        size_hint:None,None
+        adaptive_size:True
+        font_style:'Caption'
+
+    MDLabel:
+        text:"DN:" + root.dn
+        size_hint:None,None
+        adaptive_size:True
+        font_style:'Overline'
+
+
+
+<AttributeField>:
+    orientation:'horizontal'
+    size_hint:(1,None)
+    adaptive_height:True
+
+    MDIconButton:
+        icon: "close-circle-outline"
+        size_hint:None,None
+        adaptive_size:True
+        on_release:root.remove_me()
+
+    MDTextField:
+        size_hint:1,None
+        adaptive_height:True
+
+<SwitchBox>:
+    orientation:'horizontal'
+    size_hint:None,None
+    adaptive_size:True
+    spacing:5
+
+    MDLabel:
+        text:root.text
+        size_hint:None,None
+        adaptive_size:True
+        font_style:'H4'
+
+    MDSwitch:
+        size_hint:None,None
+        icon_active: "check"
+        icon_inactive: "close"
+        icon_inactive_color: "grey"
+        icon_active_color: "white"
+        pos_hint:{'center_y':0.2}
+        
+
+<ConditionValueItem>:
+    orientation:'horizontal'
+    size_hint:1,None
+    adaptive_height:True
+    spacing:10
+    padding:5,0,5,0
+
+    MDChip:
+        type: "input"
+        line_color: "grey"
+        _no_ripple_effect: True
+
+        MDChipText:
+            text: root.condition
+
+        MDChipTrailingIcon:
+            icon: "close"
+            on_release:root.remove_me()
+
+    MDTextField:
+        hint_text:root.condition
+        pos_hint:{"center_y":0.25}
+
+
+<SideBar>:
+    orientation: 'horizontal'
+    size_hint:None,1
+    adaptive_width:True
+    pos_hint:{'left':1}
+    md_bg_color: "#FFFFFF"
+    #line_color: "red"
+    elevation: 1
+
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        size_hint:None,None
+        adaptive_height:True
+        adaptive_width:True  
+        #md_bg_color: "#FFF123"
+        #line_color: "black"
+        pos_hint:{'top':1}
+        spacing:10
+        padding:"0dp","40dp","0dp","0dp"
+
+        Image:
+            source: 'UI/images/logo.png'
+            size_hint:None,None
+            width :"120dp"
+            height: "120dp"
+            pos_hint:{"center_x":0.5}
+        
+        MDBoxLayout:
+            orientation: 'vertical'
+            size_hint:None,None
+            adaptive_height:True
+            adaptive_width:True  
+            padding:"0dp","50dp","0dp","0dp"
+
+            MDRectangleFlatIconButton:
+                icon: "calendar-text-outline"
+                text: "Export ADUsers"
+                theme_text_color: "Custom"
+                text_color: "black"
+                theme_icon_color: "Custom"
+                icon_color: "black"
+                line_color: 0, 0, 0, 0
+                on_release: app.Export_ADUsers_clicked()
+            
+            MDRectangleFlatIconButton:
+                icon: "account-details"
+                text: "ADUsers"
+                theme_text_color: "Custom"
+                text_color: "black"
+                theme_icon_color: "Custom"
+                icon_color: "black"
+                line_color: 0, 0, 0, 0
+                on_release: app.ADUsers_clicked()
+
+
+
+<ListItemWithCheckbox>:
+    divider:None
+    size_hint:1,None
+    adaptive_height:True
+    LeftCheckBox:
+        on_active:self.on_check()
+
+
+<FilterItem>:   
+    orientation:"vertical"
+    size_hint:1,None
+    height:dp(500)
+    
+    MDTextField:
+        id: search_bar
+        hint_text: root.hint_text
+        text: root.text
+        icon_right: "magnify"
+        on_text: root.on_text_changed()
+
+    ScrollView:
+        size_hint:1,1
+        do_scroll_y: True
+        MDList:
+            id:list_container
+            spacing: dp(-5)
+
+<ConditionFilterBox>:
+    orientation:'vertical'
+    size_hint:1,None
+    height:dp(500)
+
+    #1
+    MDBoxLayout:
+        orientation:'horizontal'
+        size_hint:1,None
+        adaptive_height:True
+        spacing: 10
+
+        MDRectangleFlatIconButton:
+            text:'Add'
+            icon:'plus'
+            size_hint:None,None
+            adaptive_size:True
+            on_release:root.add_click()
+
+        MDTextField:
+            id:condition_bar
+            hint_text:'Enter Condition'
+            size_hint:1,None
+            pos_hint:{'center_y':0.25}            
+
+    #2
+    MDBoxLayout:
+        orientation:'horizontal'
+        size_hint:1,None
+        adaptive_height:True
+        spacing:30
+
+        SwitchBox:
+            id:and_switch
+            text:'And'
+
+        SwitchBox:
+            id:like_switch
+            text:'Like'
+
+    #3
+    MDScrollView:
+        size_hint:1,1
+        #adaptive_height:True
+        line_color:'grey'
+        line_width:1
+        #effect_cls:StiffScrollEffect
+        
+
+        MDList:
+            id:condition_container
+
+            #ConditionValueItem:
+            #    condition:"SamAccountName"
+
+            #ConditionValueItem:
+            #    condition:"Country"
+
+
+            
+<AttributeFilterBox>:
+    orientation:'vertical'
+    size_hint:1,None
+    height:dp(500)
+
+    
+    MDRectangleFlatIconButton:
+        text:"Add"
+        icon:'plus'
+        size_hint:None,None
+        adaptive_size:True
+        on_release:root.add_attribute()
+
+    ScrollView:
+        size_hint:1,1
+        do_scroll_y: True
+        MDList:
+            id:attribute_container
+            spacing: dp(-5)
+    
+
+
+
+<CenterBar>:
+    orientation: 'vertical'
+    TitleBar:
+
+    ScreenManager:
+        id:sm
+        transition:NoTransition()
+
+        HomeScreen:
+            name:"export_adusers"
+
+        UsersScreen:
+            name:"adusers"
+
+
+
+
+
+
+
+
+
+
+<HomeScreen>:
+    #MDDialog:
+    #    id:filter
+
+    MDBoxLayout:
+        id:div1
+        orientation: 'vertical'
+        size_hint:1,1 
+        #md_bg_color: "#FFF123"
+        #line_color: "blue"
+
+        MDBoxLayout:
+            id:div1_1
+            orientation: 'vertical'
+            size_hint:1,None
+            adaptive_height:True
+            #md_bg_color: "#FFF123"
+            #line_color: "blue"
+            padding:0,100,50,0
+
+
+            MDBoxLayout:
+                id:div1_1_1
+                orientation: 'horizontal'
+                size_hint:1,None
+                adaptive_height:True  
+                #md_bg_color: "#FFF123"
+                #line_color: "red"
+                line_width:1
+                padding:50,0,0,0
+
+                FilterWidget:
+                    line_color:"#3333CC"
+
+            MDBoxLayout:
+                line_color:"gray"
+                size_hint:1,None
+                height:1
+                padding:0,0,30,0
+
+
+            MDBoxLayout:
+                id:div1_1_2
+                orientation: 'horizontal'
+                size_hint:1,None
+                adaptive_height:True  
+                #md_bg_color: "#FFF123"
+                #line_color: "green"
+                spacing:"10dp"
+                padding:50,20,10,0
+
+                SpecificButton:
+                    text:"OU"
+                    text_color: 0, 0, 0, 1
+                    line_color:0,0,0,0
+                    md_bg_color: "#FFFFFF"
+                    on_release:root.OU_click()
+            
+                SpecificButton:
+                    text:"Condition"
+                    text_color: 0, 0, 0, 1
+                    line_color:0,0,0,0
+                    md_bg_color: "#FFFFFF"
+                    on_release:root.condition_click()
+
+                SpecificButton:
+                    text:"Attributes"
+                    text_color: 0, 0, 0, 1
+                    line_color:0,0,0,0
+                    md_bg_color: "#FFFFFF"
+                    on_release:root.users_click()
+
+                SpecificButton:
+                    text:"Submit"
+                    text_color: 1, 1, 1, 1
+                    md_bg_color:"#3333CC"
+                    line_color:0,0,0,0
+                    on_release:root.submit_click()
+
+
+
+        MDBoxLayout:
+            id:div1_2
+            orientation: 'horizontal'
+            size_hint:1,1
+            #md_bg_color: "#FFF123"
+            padding:20,10,0,0
+
+            MDFloatLayout:
+                id:div1_2_1
+                #orientation:'vertical'
+                size_hint:0.8,1
+                #md_bg_color:"#FFFFFF"
+                line_color:'black'
+
+
+
+            # right side condition bar Like.
+            ScrollView:
+                size_hint:0.2,1
+                MDBoxLayout:
+                    orientation:'vertical'
+                    size_hint:None,None
+                    adaptive_size:True
+                    #md_bg_color:"#FFFFFF"
+                    spacing:5
+                    padding:10,0,0,0
+
+                    MDBoxLayout:
+                        id:ou_checked_item_box
+                        orientation:'vertical'
+                        size_hint:None,None
+                        adaptive_size:True
+                        spacing:5
+            
+                    
+                    MDBoxLayout:
+                        id:condition_item_box
+                        orientation:'vertical'
+                        size_hint:None,None
+                        adaptive_size:True
+                        spacing:5
+
+                    MDBoxLayout:
+                        id:attribute_box
+                        orientation:'vertical'
+                        size_hint:None,None
+                        adaptive_size:True
+                        spacing:5
+
+                       
+<UsersScreen>:  
+    MDBoxLayout:
+        id:div1
+        orientation: 'vertical'
+        size_hint:1,1 
+        #md_bg_color: "#FFF123"
+        #line_color: "blue"
+
+        MDBoxLayout:
+            id:div1_1
+            orientation: 'vertical'
+            size_hint:1,None
+            adaptive_height:True
+            #md_bg_color: "#FFF123"
+            #line_color: "blue"
+            padding:0,100,50,0
+
+            MDBoxLayout:
+                id:div1_1_1
+                orientation: 'horizontal'
+                size_hint:1,None
+                adaptive_height:True  
+                #md_bg_color: "#FFF123"
+                #line_color: "red"
+                line_width:1
+                padding:50,0,0,0
+                
+                MDRectangleFlatIconButton:
+                    id:AddBulkUsersButton 
+                    text: "Add Bulk Users"
+                    line_color:"#3333CC"
+                    text_color:0,0,0,1
+                    icon:"account-group"
+                    icon_color: "black"
+                    on_release:root.AddBulkUsers_Screen(self)
+
+#                MDRectangleFlatIconButton:
+#                    text: "Add Single User"
+#                    line_color:0,0,0,0
+#                    text_color:0,0,0,1
+#                    icon:"account"
+#                    icon_color: "black"
+
+                MDRectangleFlatIconButton:
+                    id:EditBulkUsersButton
+                    text: "Edit Bulk Users"
+                    line_color:0,0,0,0
+                    text_color:0,0,0,1
+                    icon:"account-group"
+                    icon_color: "black"
+                    on_release: root.EditBulkUsers_Screen(self)
+
+
+            MDBoxLayout:
+                line_color:"gray"
+                size_hint:1,None
+                height:1
+        
+        MDBoxLayout:
+            id:div1_2
+            orientation: 'vertical'
+            size_hint:1,1
+            #md_bg_color: "#FFF123"
+            padding:50,0,50,0
+            #line_color:"black"
+
+
+            ScreenManager:
+                id:user_sm
+                transition:NoTransition()
+
+                AddBulkUsers:
+                    name:"AddBulkUsersScreen"
+
+
+                EditBulkUsers:
+                    name:"EditBulkUsersScreen"
+                    
+
+    
